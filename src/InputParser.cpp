@@ -65,7 +65,7 @@ bool InputReader::parseInputFile(){
 					mon.addAlphabet(anAlpha);
 				}
 			}else{
-				alpha="chi";
+				alpha="X";
 				mon.addAlphabet(alpha);
 				mon.setTransition(st1, st2, alpha);
 			}

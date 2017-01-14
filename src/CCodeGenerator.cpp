@@ -25,7 +25,10 @@ bool CCodeGenerator::writeCPPCode(string id){
 	f1 << "\t\t\tfor(int i = 0; i < size; i++) {" <<endl;
 	f1 << "\t\t\t\tstring predVal;"<< endl;
 	f1 << "\t\t\t\tfor(map<string, vector<bool> >::iterator it = predValues.begin(); it != predValues.end(); ++it){" <<endl;
-	f1 << "\t\t\t\t\tif(it->second[i]) {" << endl;
+	f1 << "\t\t\t\t\tif(it->first == \"X\" && it->second[i]){" << endl;
+	f1 << "\t\t\t\t\t\tpredVal = \"X\";break;" << endl;
+	f1 << "\t\t\t\t\t}" << endl;
+	f1 << "\t\t\t\t\tif( it->second[i] && it->first != \"X\") {" << endl;
 	f1 << "\t\t\t\t\t\tpredVal+=it->first;" << endl;
 	f1 << "\t\t\t\t\t\tpredVal+=\"&&\";" << endl;
 	f1 << "\t\t\t\t\t}" << endl;
@@ -80,7 +83,7 @@ bool CCodeGenerator::writeHeaderCode(string id){
 	f1 << "\tclass LTMonitor"<< id << " : public LTMonitor{" << endl;
 	f1 << "\tpublic:" << endl;
 	f1 << "\t\tLTMonitor" << id << "();" << endl;
-	f1 << "\t\tvirtual void monitor(string &curr_state, map<string, vector<bool> > &predValues, int size);" << endl;
+	f1 << "\t\tvirtual void monitor(string &curr_state, map<string, vector<bool> > &predValues, int size) = 0;" << endl;
 	f1 << "\t};\n";
 	f1 <<"}\n";
 	f1 << "#endif";
