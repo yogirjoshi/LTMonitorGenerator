@@ -33,7 +33,7 @@ bool CCodeGenerator::writeCPPCode(string id){
 	f1 << "\t\t\t\t\t\tpredVal+=\"&&\";" << endl;
 	f1 << "\t\t\t\t\t}" << endl;
 	f1 << "\t\t\t\t}\n";
-	f1 << "\t\t\t\tif(predVal.substr(predVal.length()-2, 2) == \"&&\"){" << endl;
+	f1 << "\t\t\t\tif( predVal.length()>= 2 && predVal.substr(predVal.length()-2, 2) == \"&&\"){" << endl;
 	f1 << "\t\t\t\t\tpredVal = predVal.substr(0,predVal.length()-2);" << endl;
 	f1 << "\t\t\t\t}"<<endl;
 	for(map <pair<string, string>, string>::iterator it = mon.transition.begin(); it != mon.transition.end();++it){
@@ -62,7 +62,7 @@ bool CCodeGenerator::writeBaseClass(){
  	f1 << "\t\tpublic:"<< endl;
  	f1 << "\t\t\tstring initialState;"  << endl;
  	f1 << "\t\t\tvector<string> states;"<< endl;
- 	f1 << "\t\tvirtual void monitor(string &curr_state, map<string, vector<bool> > &predValues, int size);" << endl;
+ 	f1 << "\t\tvirtual void monitor(string &curr_state, map<string, vector<bool> > &predValues, int size) = 0;" << endl;
  	f1 << "\t};\n";
  	f1 << "}\n";
 	f1 << "#endif";
@@ -83,7 +83,7 @@ bool CCodeGenerator::writeHeaderCode(string id){
 	f1 << "\tclass LTMonitor"<< id << " : public LTMonitor{" << endl;
 	f1 << "\tpublic:" << endl;
 	f1 << "\t\tLTMonitor" << id << "();" << endl;
-	f1 << "\t\tvirtual void monitor(string &curr_state, map<string, vector<bool> > &predValues, int size) = 0;" << endl;
+	f1 << "\t\tvirtual void monitor(string &curr_state, map<string, vector<bool> > &predValues, int size);" << endl;
 	f1 << "\t};\n";
 	f1 <<"}\n";
 	f1 << "#endif";
